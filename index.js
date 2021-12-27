@@ -75,8 +75,9 @@ app.delete('/api/persons/:id',(request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-    const name = request.body.name
-    const number = request.body.number
+    const {name, number} = request.body
+    // const name = request.body.name
+    // const number = request.body.number
 
     if (!name || !number) {
       return response.status(400).json({ 
