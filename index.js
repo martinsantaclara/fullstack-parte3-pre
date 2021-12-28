@@ -63,7 +63,7 @@ app.post('/api/persons', (request, response, next) => {
                 })
                 person.save()
                     .then(savedPerson => {
-                    response.json(savedPerson)
+                        response.json(savedPerson)
                     })
                     .catch(error => next(error))
             }
@@ -84,36 +84,36 @@ app.get('/info', (request, response) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id)
-      .then(result => {
-        response.status(204).end()
-      })
-      .catch(error => next(error))
+        .then(() => {
+            response.status(204).end()
+        })
+        .catch(error => next(error))
 })
   
 app.put('/api/persons/:id', (request, response, next) => {
-  const body = request.body
+    const body = request.body
 
-  const person = {
-    name: body.name,
-    number: body.number,
-  }
+    const person = {
+        name: body.name,
+        number: body.number,
+    }
 
-  const opts = { runValidators: true };
-  Person.findByIdAndUpdate(request.params.id, person,{ new: true, runValidators: true})
-    .then(updatedPerson => {
-      response.json(updatedPerson)
-    })
-    .catch(error => next(error))
+    Person.findByIdAndUpdate(request.params.id, person,{ new: true, runValidators: true})
+        .then(updatedPerson => {
+            response.json(updatedPerson)
+        })
+        .catch(error => next(error))
 })
   
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
+    response.status(404).send({ error: 'unknown endpoint' })
 }
 
 app.use(unknownEndpoint)
 
 app.use(errorHandler)
 
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
