@@ -117,7 +117,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 })
 
 app.post('/payment-test', (req, res) => {
-    PaymentInstance.getPaymentLink(req, res, req.body)
+    PaymentInstance.getPaymentLink(req, res)
     // console.log('Got body:', req.body);
     // res.sendStatus(200);
 })
