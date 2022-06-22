@@ -149,7 +149,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 app.post('/payment', async (req, res) => {
     console.log(req.body)
     try {
-        const payment = await axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
+        const {payment} = await axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
             headers: {
                 'Content-Type': 'application/json',
                 // eslint-disable-next-line no-undef
