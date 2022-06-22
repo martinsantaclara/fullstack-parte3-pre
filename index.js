@@ -169,7 +169,7 @@ app.post('/payment', async (req, res) => {
 
 app.get('/rick', async (req, res) => {
     try {
-        const { data } = await axios.get('https://rickandmortyapi.com/api/character')
+        const data  = await axios.get('https://rickandmortyapi.com/api/character')
         console.log(data)
         res.status(200).json(data)
     } catch (err) {
