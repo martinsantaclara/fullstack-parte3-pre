@@ -2,7 +2,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-require('dotenv').config()
+const dotenv = require("dotenv")
 const axios = require('axios')
 const Person = require('./models/person')
 
@@ -12,7 +12,11 @@ const PaymentService = require("./services/PaymentService")
 
 const PaymentInstance = new PaymentController(new PaymentService())
 
+dotenv.config()
 
+
+const token = process.env.ACCESS_TOKEN
+console.log('token', token)
 
 const app = express()
 
@@ -152,7 +156,7 @@ app.post('/payment', async (req, res) => {
                 // Authorization: 'Bearer APP_USR-8882286153796418-062008-ef881bbec8fedd975510644fa943091f-1145863615'
 
                 // eslint-disable-next-line no-undef
-                Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+                Authorization: `Bearer ${token}`
             }
         })
 
