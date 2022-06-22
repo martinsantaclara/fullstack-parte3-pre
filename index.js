@@ -5,6 +5,14 @@ const cors = require('cors')
 require('dotenv').config()
 const axios = require('axios')
 const Person = require('./models/person')
+
+const PaymentController = require("../controllers/PaymentController")
+const PaymentService = require("../services/PaymentService")
+
+const PaymentInstance = new PaymentController(new PaymentService())
+
+
+
 const app = express()
 
 morgan.token('person', function getPerson (req) {
@@ -107,27 +115,33 @@ app.put('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-app.post('/payment', async (req, res) => {
-    const body = req.body
+app.post('/payment-test', (req, res) => {
+    PaymentInstance.getPaymentLink(req, res, req.body)
+    // console.log('Got body:', req.body);
+    // res.sendStatus(200);
+})
 
-    // const body = {
-    //     payer_email: "test_user_24559756@testuser.com",
-    //     items: [
-    //         {
-    //             title: "Dummy Title",
-    //             description: "Dummy description",
-    //             picture_url: "http://www.myapp.com/myimage.jpg",
-    //             category_id: "category123",
-    //             quantity: 1,
-    //             unit_price: 10
-    //         }
-    //     ],
-    //     back_urls: {
-    //         failure: "https://google.com.ar",
-    //         pending: "https://google.com.ar",
-    //         success: "https://google.com.ar"
-    //     }
-    // }
+app.post('/payment', async (req, res) => {
+    // const body = req.body
+
+    const body = {
+        payer_email: "test_user_24559756@testuser.com",
+        items: [
+            {
+                title: "Dummy Title",
+                description: "Dummy description",
+                picture_url: "http://www.myapp.com/myimage.jpg",
+                category_id: "category123",
+                quantity: 1,
+                unit_price: 50
+            }
+        ],
+        back_urls: {
+            failure: "https://google.com.ar",
+            pending: "https://google.com.ar",
+            success: "https://google.com.ar"
+        }
+    }
 
     try {
         const {data} = await axios.post('https://api.mercadopago.com/checkout/preferences', body, {
