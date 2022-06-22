@@ -146,7 +146,7 @@ app.post('/payment', (req, res) => {
         })
 })
 
-app.post('/rick', async (req, res) => {
+app.post('/rick', (req, res) => {
     try {
         const { data } = axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
             headers: {
@@ -155,7 +155,7 @@ app.post('/rick', async (req, res) => {
                 Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
             }
         })
-        return res.json(data.data)
+        return res.json(data)
     } catch (err) {
         res.status(500).json({ message: 'Server error' })
     }
