@@ -16,7 +16,7 @@ dotenv.config()
 
 
 const token = process.env.ACCESS_TOKEN
-console.log('token', token)
+console.log('holala tokio token', token)
 
 const app = express()
 

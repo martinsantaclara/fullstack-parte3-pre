@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
@@ -7,7 +6,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const url = process.env.MONGODB_URI
-console.log(process.env.MONGODB_URI)
+console.log('holala paris mongo', process.env.MONGODB_URI)
 
 mongoose.connect(url)
     .then(() => {
