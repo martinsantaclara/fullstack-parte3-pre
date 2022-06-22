@@ -6,8 +6,9 @@ require('dotenv').config()
 const axios = require('axios')
 const Person = require('./models/person')
 
-const PaymentController = require("../controllers/PaymentController")
-const PaymentService = require("../services/PaymentService")
+const PaymentController = require("./controllers/PaymentController")
+
+const PaymentService = require("./services/PaymentService")
 
 const PaymentInstance = new PaymentController(new PaymentService())
 
