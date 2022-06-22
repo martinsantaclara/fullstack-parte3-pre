@@ -1,8 +1,9 @@
+/* eslint-disable quotes */
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 require('dotenv').config()
-
+const axios = require('axios')
 const Person = require('./models/person')
 const app = express()
 
@@ -105,6 +106,43 @@ app.put('/api/persons/:id', (request, response, next) => {
         })
         .catch(error => next(error))
 })
+
+app.post('/payment', (req, res) => {
+    const url = 'https://api.mercadopago.com/checkout/preferences'
+
+    const body = {
+        payer_email: "test_user_24559756@testuser.com",
+        items: [
+            {
+                title: "Dummy Title",
+                description: "Dummy description",
+                picture_url: "http://www.myapp.com/myimage.jpg",
+                category_id: "category123",
+                quantity: 2,
+                unit_price: 20
+            }
+        ],
+        back_urls: {
+            failure: "https://google.com.ar",
+            pending: "https://google.com.ar",
+            success: "https://google.com.ar"
+        }
+    }
+
+    axios.post(url, body, {
+        headers: {
+            'Content-Type': 'application/json',
+            // eslint-disable-next-line no-undef
+            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+        }
+    })
+        .then(payment => {
+            res.json(payment.data)
+        })
+        .catch(error => {
+            console.log({error: true, msg: error.message})
+        })
+})
   
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
@@ -113,6 +151,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 app.use(errorHandler)
+
 
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3001
