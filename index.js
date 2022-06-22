@@ -146,7 +146,7 @@ app.post('/payment', (req, res) => {
         })
 })
 
-app.post('/rick', async (req, res) => {
+app.post('/payment', async (req, res) => {
 
     try {
         const payment = await axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
@@ -157,7 +157,7 @@ app.post('/rick', async (req, res) => {
             }
         })
 
-        return res.json(payment.data)   
+        res.status(200).json(payment.data)   
         
     } catch (error) {
         console.log(error.message)
