@@ -174,6 +174,51 @@ app.get('/rick', async (req, res) => {
         res.status(500).json({ message: 'Server error' })
     }
 })
+
+app.post('/info', function (req, res) {
+
+    const body = req.body
+
+    taxee(body).then(function(payment){
+        res.send(payment)
+    // eslint-disable-next-line no-unused-vars
+    }).catch(function (error) {
+        res.render('error')
+    })
+
+})
+
+function taxee(body) {
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, reject) => {
+
+        
+        axios.post('https://api.mercadopago.com/checkout/preferences', body, {
+            //data sent to Taxee.io
+            headers: {
+                'Content-Type': 'application/json',
+                // eslint-disable-next-line no-undef
+                Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+            }
+            
+        }).then(function (response) {
+            // var taxData = {
+            //     income: '$' + income
+            //     , fica: response.data.annual.fica.amount
+            //     , federal: response.data.annual.federal.amount
+            //     , stateTax: response.data.annual.state.amount
+            //     , state
+            //     , zip: zip
+            // }
+            resolve(response.data)
+        }).catch(function (error) {
+            console.log('break')
+            resolve(error)
+        })
+    })
+}
+
+
   
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
