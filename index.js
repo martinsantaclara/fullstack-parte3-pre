@@ -30,7 +30,8 @@ const errorHandler = (error, request, response, next) => {
 app.get('/api/persons',(request, response, next) => {
     Person.find({})
         .then(persons => {
-            response.json(persons)
+            // response.json(persons)
+            response.json(persons.map(p => p.toJSON()))
         })
         .catch(error => next(error))
 })
@@ -39,7 +40,7 @@ app.get('/api/persons/:id',(request, response, next) => {
     Person.findById(request.params.id)
         .then(person => {
             if (person) {
-                response.json(person)
+                response.json(person.toJSON())
             } else {
                 response.status(404).end()
             }      
