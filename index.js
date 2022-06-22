@@ -170,7 +170,7 @@ app.post('/rick', async (req, res) => {
 app.get('/rick', async (req, res) => {
     try {
         const { data } = await axios.get('https://rickandmortyapi.com/api/character')
-        console.log("peoeoeo")
+        console.log(data)
         res.status(200).json(data)
     } catch (err) {
         res.status(500).json({ message: 'Server error' })
