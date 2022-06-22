@@ -5,6 +5,7 @@ const cors = require('cors')
 require('dotenv').config()
 const axios = require('axios')
 const Person = require('./models/person')
+const fetch = require('node-fetch')
 const app = express()
 
 morgan.token('person', function getPerson (req) {
