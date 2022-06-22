@@ -5,7 +5,6 @@ const cors = require('cors')
 require('dotenv').config()
 const axios = require('axios')
 const Person = require('./models/person')
-const fetch = require('node-fetch')
 const app = express()
 
 morgan.token('person', function getPerson (req) {
@@ -108,63 +107,10 @@ app.put('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-// app.post('/payment', (req, res) => {
-//     const url = 'https://api.mercadopago.com/checkout/preferences'
-
-
-
-//     // const body = {
-//     //     payer_email: "test_user_24559756@testuser.com",
-//     //     items: [
-//     //         {
-//     //             title: "Dummy Title",
-//     //             description: "Dummy description",
-//     //             picture_url: "http://www.myapp.com/myimage.jpg",
-//     //             category_id: "category123",
-//     //             quantity: 2,
-//     //             unit_price: 20
-//     //         }
-//     //     ],
-//     //     back_urls: {
-//     //         failure: "https://google.com.ar",
-//     //         pending: "https://google.com.ar",
-//     //         success: "https://google.com.ar"
-//     //     }
-//     // }
-
-//     axios.post(url, req.body, {
-//         headers: {
-//             'Content-Type': 'application/json',
-//             // eslint-disable-next-line no-undef
-//             Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-//         }
-//     })
-//         .then(payment => {
-//             res.json(payment.data)
-//         })
-//         .catch(error => {
-//             console.log({error: true, msg: error.message})
-//         })
-// })
-
-app.post('/payment_fetch', (req, res) => {
-    fetch('https://api.mercadopago.com/checkout/preferences', {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(req.body), // data can be `string` or {object}!
-        headers:{
-            'Content-Type': 'application/json',
-            // eslint-disable-next-line no-undef
-            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-        }
-    }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response))
-})
-
 app.post('/payment', async (req, res) => {
-    console.log(req.body)
+    const body = req.body
     try {
-        const {payment} = await axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
+        const {data} = await axios.post('https://api.mercadopago.com/checkout/preferences', body, {
             headers: {
                 'Content-Type': 'application/json',
                 // eslint-disable-next-line no-undef
@@ -172,7 +118,9 @@ app.post('/payment', async (req, res) => {
             }
         })
 
-        res.status(200).json(payment.data)   
+        console.log(data)
+
+        res.status(200).json(data)   
         
     } catch (error) {
         console.log(error.message)
