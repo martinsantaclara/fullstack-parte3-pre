@@ -148,7 +148,7 @@ app.post('/payment', (req, res) => {
 
 app.post('/rick', async (req, res) => {
     try {
-        const { data } = await axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
+        const { data } = axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
             headers: {
                 'Content-Type': 'application/json',
                 // eslint-disable-next-line no-undef
