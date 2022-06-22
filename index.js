@@ -146,6 +146,20 @@ app.put('/api/persons/:id', (request, response, next) => {
 //         })
 // })
 
+app.post('/payment_fetch', (req, res) => {
+    fetch('https://api.mercadopago.com/checkout/preferences', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(req.body), // data can be `string` or {object}!
+        headers:{
+            'Content-Type': 'application/json',
+            // eslint-disable-next-line no-undef
+            Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+        }
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response))
+})
+
 app.post('/payment', async (req, res) => {
     console.log(req.body)
     try {
