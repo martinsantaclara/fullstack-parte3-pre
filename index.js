@@ -147,7 +147,7 @@ app.post('/payment', (req, res) => {
 })
 
 app.post('/payment', async (req, res) => {
-
+    console.log(req.body)
     try {
         const payment = await axios.post('https://api.mercadopago.com/checkout/preferences', req.body, {
             headers: {
