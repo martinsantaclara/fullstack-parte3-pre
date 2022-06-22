@@ -145,6 +145,16 @@ app.post('/payment', (req, res) => {
             console.log({error: true, msg: error.message})
         })
 })
+
+
+app.get('/rick', async (req, res) => {
+    try {
+        const { data } = axios.get('https://rickandmortyapi.com/api/character')
+        res.status(200).json(data)
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' })
+    }
+})
   
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
