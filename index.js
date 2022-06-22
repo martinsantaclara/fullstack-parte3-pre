@@ -149,7 +149,9 @@ app.post('/payment', async (req, res) => {
             headers: {
                 'Content-Type': 'application/json',
                 // eslint-disable-next-line no-undef
-                Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+                Authorization: 'Bearer APP_USR-8882286153796418-062008-ef881bbec8fedd975510644fa943091f-1145863615'
+
+                // Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
             }
         })
 
