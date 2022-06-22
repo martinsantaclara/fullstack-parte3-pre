@@ -108,7 +108,27 @@ app.put('/api/persons/:id', (request, response, next) => {
 })
 
 app.post('/payment', async (req, res) => {
-    const body = req.body
+    // const body = req.body
+
+    const body = {
+        payer_email: "test_user_24559756@testuser.com",
+        items: [
+            {
+                title: "Dummy Title",
+                description: "Dummy description",
+                picture_url: "http://www.myapp.com/myimage.jpg",
+                category_id: "category123",
+                quantity: 1,
+                unit_price: 10
+            }
+        ],
+        back_urls: {
+            failure: "https://google.com.ar",
+            pending: "https://google.com.ar",
+            success: "https://google.com.ar"
+        }
+    }
+
     try {
         const {data} = await axios.post('https://api.mercadopago.com/checkout/preferences', body, {
             headers: {
