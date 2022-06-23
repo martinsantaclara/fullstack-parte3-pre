@@ -2,8 +2,10 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const dotenv = require("dotenv")
 const axios = require('axios')
+
+require("dotenv").config()
+
 const Person = require('./models/person')
 
 const PaymentController = require("./controllers/PaymentController")
@@ -11,12 +13,6 @@ const PaymentController = require("./controllers/PaymentController")
 const PaymentService = require("./services/PaymentService")
 
 const PaymentInstance = new PaymentController(new PaymentService())
-
-dotenv.config()
-
-
-const token = process.env.ACCESS_TOKEN
-console.log('holala tokio token', token)
 
 const app = express()
 
@@ -156,7 +152,7 @@ app.post('/payment', async (req, res) => {
                 // Authorization: 'Bearer APP_USR-8882286153796418-062008-ef881bbec8fedd975510644fa943091f-1145863615'
 
                 // eslint-disable-next-line no-undef
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
             }
         })
 
