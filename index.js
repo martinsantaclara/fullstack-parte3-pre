@@ -125,6 +125,11 @@ app.post('/payment', async (req, res) => {
         console.log(error.message)
     }    
 })
+
+app.post('/webhook', (req, res) => {
+    console.log(req.body)
+    res.status(200).send("OK")   
+})
   
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
