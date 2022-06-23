@@ -3,16 +3,9 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const axios = require('axios')
-
 require("dotenv").config()
 
 const Person = require('./models/person')
-
-const PaymentController = require("./controllers/PaymentController")
-
-const PaymentService = require("./services/PaymentService")
-
-const PaymentInstance = new PaymentController(new PaymentService())
 
 const app = express()
 
@@ -116,113 +109,22 @@ app.put('/api/persons/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-app.post('/payment-test', (req, res) => {
-    PaymentInstance.getPaymentLink(req, res)
-    // console.log('Got body:', req.body);
-    // res.sendStatus(200);
-})
-
 app.post('/payment', async (req, res) => {
     const body = req.body
-
-    // const body = {
-    //     payer_email: "test_user_24559756@testuser.com",
-    //     items: [
-    //         {
-    //             title: "Dummy Title",
-    //             description: "Dummy description",
-    //             picture_url: "http://www.myapp.com/myimage.jpg",
-    //             category_id: "category123",
-    //             quantity: 1,
-    //             unit_price: 50
-    //         }
-    //     ],
-    //     back_urls: {
-    //         failure: "https://google.com.ar",
-    //         pending: "https://google.com.ar",
-    //         success: "https://google.com.ar"
-    //     }
-    // }
-
     try {
         const {data} = await axios.post('https://api.mercadopago.com/checkout/preferences', body, {
             headers: {
                 'Content-Type': 'application/json',
                 // eslint-disable-next-line no-undef
-                // Authorization: 'Bearer APP_USR-8882286153796418-062008-ef881bbec8fedd975510644fa943091f-1145863615'
-
-                // eslint-disable-next-line no-undef
                 Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
             }
         })
-
-        console.log(data)
-
         res.status(200).json(data)   
         
     } catch (error) {
         console.log(error.message)
-    }
-    
-    // res.send("OK")
+    }    
 })
-
-
-app.get('/rick', async (req, res) => {
-    try {
-        const {data}  = await axios.get('https://rickandmortyapi.com/api/character')
-        console.log(data)
-        res.status(200).json(data)
-    } catch (err) {
-        res.status(500).json({ message: 'Server error' })
-    }
-})
-
-app.post('/info', function (req, res) {
-
-    const body = req.body
-
-    taxee(body).then(function(payment){
-        res.send(payment)
-    // eslint-disable-next-line no-unused-vars
-    }).catch(function (error) {
-        res.render('error')
-    })
-
-})
-
-function taxee(body) {
-    // eslint-disable-next-line no-unused-vars
-    return new Promise((resolve, reject) => {
-
-        
-        axios.post('https://api.mercadopago.com/checkout/preferences', body, {
-            //data sent to Taxee.io
-            headers: {
-                'Content-Type': 'application/json',
-                // eslint-disable-next-line no-undef
-                // Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
-                Authorization: 'Bearer APP_USR-8882286153796418-062008-ef881bbec8fedd975510644fa943091f-1145863615'
-            }
-            
-        }).then(function (response) {
-            // var taxData = {
-            //     income: '$' + income
-            //     , fica: response.data.annual.fica.amount
-            //     , federal: response.data.annual.federal.amount
-            //     , stateTax: response.data.annual.state.amount
-            //     , state
-            //     , zip: zip
-            // }
-            resolve(response.data)
-        }).catch(function (error) {
-            console.log('break')
-            resolve(error)
-        })
-    })
-}
-
-
   
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
@@ -231,7 +133,6 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 app.use(errorHandler)
-
 
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 3001
