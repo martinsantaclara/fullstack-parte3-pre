@@ -132,7 +132,7 @@ app.post('/webhook', (req, res) => {
 })
 
 app.get('/notifications', (req, res) => {
-    console.log('notifications')
+    console.log('notifications leru leru')
     res.status(200).send("OK")   
 })
   
