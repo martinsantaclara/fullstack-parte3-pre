@@ -132,8 +132,9 @@ app.post('/webhook', (req, res) => {
 })
 
 app.get('/notifications', (req, res) => {
+    const body = req.body
     console.log('notifications leru leru')
-    res.status(200).send("OK")   
+    res.status(200).send(body)   
 })
   
 const unknownEndpoint = (request, response) => {
