@@ -131,11 +131,11 @@ app.post('/webhook', (req, res) => {
     res.status(200).send("OK")   
 })
 
-app.get('/notifications', (req, res) => {
-    const body = req.body
-    console.log('notifications leru leru')
-    res.status(200).send(body)   
-})
+// app.get('/notifications', (req, res) => {
+//     const body = req.body
+//     console.log('notifications leru leru')
+//     res.status(200).send(body)   
+// })
   
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
