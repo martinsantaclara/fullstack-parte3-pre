@@ -130,6 +130,11 @@ app.post('/webhook', (req, res) => {
     console.log(req.body)
     res.status(200).send("OK")   
 })
+
+app.post('/notifications', (req, res) => {
+    console.log('notifications')
+    res.status(200).send("OK")   
+})
   
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
