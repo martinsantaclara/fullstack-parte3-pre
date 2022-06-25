@@ -5,6 +5,17 @@ const cors = require('cors')
 const axios = require('axios')
 require("dotenv").config()
 
+const nodemailer = require('nodemailer')
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'martinsantaclara@gmail.com',
+        pass: 'lxeotbgsrvxiobvc'
+    }
+})
+
+
 const Person = require('./models/person')
 
 const app = express()
@@ -137,6 +148,21 @@ app.post('/webhook', (req, res) => {
 //     res.status(200).send(body)   
 // })
   
+app.post('/api/email',(req, res) => {
+
+    const mailOptions = req.body
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error)
+        } else {
+            console.log('Email sent: ' + info.response)
+            res.status(200).send("OK")   
+        }
+    })
+
+})
+
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
 }
