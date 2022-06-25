@@ -146,11 +146,10 @@ app.post('/api/email',(req, res) => {
 
     const {to, subject, html} = req.body
 
-    const mailOptions = {from:'martinsantaclara@gmail.com'}
-    mailOptions.to = to
-    mailOptions.subject = subject
-    mailOptions.html = html
-
+    let mailOptions = {from:'martinsantaclara@gmail.com'}
+    const varOptions = {to : to, subject: subject, html: html}
+    mailOptions = {...mailOptions, ...varOptions}
+    
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
             console.log(error)
