@@ -141,16 +141,15 @@ app.post('/webhook', (req, res) => {
     console.log(req.body)
     res.status(200).send("OK")   
 })
-
-// app.get('/success', (req, res) => {
-//     const body = req.body
-//     console.log('notifications leru leru')
-//     res.status(200).send(body)   
-// })
   
 app.post('/api/email',(req, res) => {
 
-    const mailOptions = req.body
+    const {to, subject, html} = req.body
+
+    const mailOptions = {from:'martinsantaclara@gmail.com'}
+    mailOptions.to = to
+    mailOptions.subject = subject
+    mailOptions.html = html
 
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
